@@ -17,8 +17,9 @@ class AuthController extends Controller
                 return redirect()->intended('teacher/dashboard');
             } else if (Auth::user()->user_type == 3) {
                 return redirect()->intended('student/dashboard');
-            } else if (Auth::user()->user_type == 4)
+            } else if (Auth::user()->user_type == 4) {
                 return redirect()->intended('parent/dashboard');
+            }
         }
         return view('auth.login');
     }
@@ -41,8 +42,9 @@ class AuthController extends Controller
                 return redirect()->intended('teacher/dashboard');
             } else if (Auth::user()->user_type == 3) {
                 return redirect()->intended('student/dashboard');
-            } else if (Auth::user()->user_type == 4)
+            } else if (Auth::user()->user_type == 4) {
                 return redirect()->intended('parent/dashboard');
+            }
         } else {
             // Authentication failed
             return redirect()->back()->with('error', 'Please enter correct email and password');
