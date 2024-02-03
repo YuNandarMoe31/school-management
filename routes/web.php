@@ -13,6 +13,12 @@ Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/', [AuthController::class, 'authLogin']);
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot');
+Route::post('forgot-password', [AuthController::class, 'postForgotPassword'])->name('forgot');
+Route::get('reset/{token}', [AuthController::class, 'reset'])->name('reset');
+Route::post('reset/{token}', [AuthController::class, 'postReset'])->name('reset');
+
+
 
 Route::get('admin/admin/list', function () {
     return view('admin.list');
