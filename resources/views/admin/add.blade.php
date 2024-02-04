@@ -34,23 +34,20 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Name</label>
-                                        <input type="name" class="form-control" name="name"
-                                            placeholder="Enter Name">
+                                        <input type="name" class="form-control" name="name" placeholder="Enter Name"
+                                            value="{{ old('name') }}">
+                                        <div class="text-danger">{{ $errors->first('name') }}</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email address</label>
-                                        <input type="email" class="form-control" name="email"
-                                            placeholder="Enter Email">
+                                        <input type="email" class="form-control" name="email" placeholder="Enter Email"
+                                            value="{{ old('email') }}">
+                                        <div class="text-danger">{{ $errors->first('email') }}</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input type="password" class="form-control" name="password"
-                                            placeholder="Password">
-                                    </div>
-
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                        <div class="text-danger">{{ $errors->first('password') }}</div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->

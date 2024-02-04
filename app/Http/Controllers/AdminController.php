@@ -11,9 +11,9 @@ class AdminController extends Controller
     public function list()
     {
         $users = User::where('is_delete', 0)
-                    ->where('user_type', 1)
-                    ->orderBy('id', 'desc')
-                    ->get();
+            ->where('user_type', 1)
+            ->orderBy('id', 'desc')
+            ->get();
         $data['header_title'] = "Admin List";
         return view('admin.list', $data, compact('users'));
     }
@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
         ]);
 
@@ -58,11 +58,15 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$id,
+        ]);
+
         $user = User::getSingle($id);
         $user->name = trim($request->name);
         $user->email = trim($request->email);
 
-        if(!empty($request->password)) {
+        if (!empty($request->password)) {
             $user->password = Hash::make($request->password);
         }
         $user->user_type = 1;
@@ -79,7 +83,6 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->route('admin.list')
-        ->with('success', 'Admin deleted successfully.');
-
+            ->with('success', 'Admin deleted successfully.');
     }
 }

@@ -35,11 +35,15 @@
                                     <div class="form-group">
                                         <label for="name">Name</label>
                                         <input type="name" class="form-control" name="name"
-                                            value="{{ $getRecord->name }}">
+                                            value="{{ old('name', $getRecord->name) }}">
+                                        <div class="text-danger">{{ $errors->first('name') }}</div>
+
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email address</label>
-                                        <input type="email" class="form-control" name="email" value="{{ $getRecord->email }}">
+                                        <input type="email" class="form-control" name="email"
+                                            value="{{ old('email', $getRecord->email) }}">
+                                        <div class="text-danger">{{ $errors->first('email') }}</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Password</label>
