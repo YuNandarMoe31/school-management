@@ -8,12 +8,36 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $users = User::where('is_delete', 0)
-            ->where('user_type', 1)
-            ->orderBy('id', 'desc')
-            ->get();
+        $query = User::query();
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+
+        if ($request->filled('user_type')) {
+            $query->where('user_type', $request->input('user_type'));
+        }
+
+        if ($request->filled('is_delete')) {
+            $query->where('is_delete', $request->input('is_delete'));
+        }
+
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->input('date'));
+        }
+
+        // Filter by user type and deleted status
+        $query->where('is_delete', 0)->where('user_type', 1);
+
+        // Fetch filtered users with pagination
+        $users = $query->orderBy('id', 'desc')->paginate(2);
+
+        // Pass data to the view
         $data['header_title'] = "Admin List";
         return view('admin.list', $data, compact('users'));
     }
@@ -59,7 +83,7 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
         ]);
 
         $user = User::getSingle($id);
